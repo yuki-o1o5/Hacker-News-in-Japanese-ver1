@@ -1,7 +1,7 @@
-import styles from "./articleAuthor.module.css";
+import styles from "./ArticleAuthor.module.css";
 
-const articleAuthor = (props) => {
+const ArticleAuthor = (props) => {
   return <p>{props.author}</p>;
 };
 
-export default articleAuthor;
+export default ArticleAuthor;

@@ -1,7 +1,7 @@
-import styles from "./articleTitle.module.css";
+import styles from "./ArticleTitle.module.css";
 
-const articleTitle = (props) => {
+const ArticleTitle = (props) => {
   return <h2>{props.articleTitle}</h2>;
 };
 
-export default articleTitle;
+export default ArticleTitle;

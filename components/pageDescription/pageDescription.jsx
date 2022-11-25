@@ -1,6 +1,6 @@
-import styles from "./pageDescription.module.css";
+import styles from "./PageDescription.module.css";
 
-const pageDescription = () => {
+const PageDescription = () => {
   return (
     <p>
       このサイトは直近1時間以内に投稿されたHacer Newsの記事の中から
@@ -9,4 +9,4 @@ const pageDescription = () => {
   );
 };
 
-export default pageDescription;
+export default PageDescription;

@@ -1,7 +1,7 @@
-import styles from "./articlePoints.module.css";
+import styles from "./ArticlePoints.module.css";
 
-const articlePoints = (props) => {
+const ArticlePoints = (props) => {
   return <p>{props.points}</p>;
 };
 
-export default articlePoints;
+export default ArticlePoints;

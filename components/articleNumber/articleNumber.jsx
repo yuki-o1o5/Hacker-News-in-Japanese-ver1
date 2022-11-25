@@ -1,7 +1,7 @@
-import styles from "./articleNumber.module.css";
+import styles from "./rticleNumber.module.css";
 
-const articleNumber = (props) => {
+const rticleNumber = (props) => {
   return <p>{props.number}</p>;
 };
 
-export default articleNumber;
+export default rticleNumber;
