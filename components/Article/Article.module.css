@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.article_primary_container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.article_number {
+  width: 10%;
+}
+
+.styles.article_secondary_container {
+  width: 90%;
+}
+
+.article_tertiary_container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.tertiary_container_childre {
+  width: 30%;
+}
