@@ -1,7 +1,7 @@
-import styles from "./ArticleCategoryTitle.module.css";
+import styles from "./ArticlesCategoryTitle.module.css";
 
-const ArticleCategoryTitle = (props) => {
+const ArticlesCategoryTitle = (props) => {
   return <h3>{props.categoryTitle}</h3>;
 };
 
-export default ArticleCategoryTitle;
+export default ArticlesCategoryTitle;
