@@ -1,7 +1,9 @@
 import styles from "./DetaillArticleNumber.module.css";
 
 const DetailArticleNumber = (props) => {
-  return <p>{props.detailarticlenumber}</p>;
+  return (
+    <p className={styles.detailarticlenumber}>{props.detailarticlenumber}</p>
+  );
 };
 
 export default DetailArticleNumber;

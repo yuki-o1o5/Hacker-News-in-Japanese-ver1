@@ -1,7 +1,11 @@
 import styles from "./DetailArticleCommentChild.module.css";
 
 const DetailArticleCommentChild = (props) => {
-  return <p>{props.detailarticlecommentchild}</p>;
+  return (
+    <p className={styles.detailarticlecommentchild}>
+      {props.detailarticlecommentchild}
+    </p>
+  );
 };
 
 export default DetailArticleCommentChild;

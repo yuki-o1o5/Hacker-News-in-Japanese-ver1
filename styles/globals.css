@@ -16,7 +16,7 @@ a {
 }
 
 .main_container {
-  margin: 5em 5em;
+  margin: 5em 10em;
   padding: 0 4%;
 }
 
@@ -26,7 +26,8 @@ a {
   justify-content: space-between;
   width: 100%;
   background-color: rgb(219, 214, 214);
-  margin-bottom: 5em;
+  margin-bottom: 2em;
+  padding: 0.5em;
 }
 
 .article_number {
@@ -43,7 +44,7 @@ a {
 }
 
 .article_description_title {
-  width: 30%;
+  width: 33%;
 }
 
 .page_description {

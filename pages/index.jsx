@@ -50,7 +50,7 @@ const mainPage = () => {
         </div>
         <div className={"article_container"}>
           <div className={"article_number"}>
-            <ArticleNumber number={"1"} />
+            <ArticleNumber number={"2"} />
           </div>
           <div className={"article_description_container"}>
             <ArticleTitle
@@ -71,7 +71,7 @@ const mainPage = () => {
         </div>
         <div className={"article_container"}>
           <div className={"article_number"}>
-            <ArticleNumber number={"1"} />
+            <ArticleNumber number={"3"} />
           </div>
           <div className={"article_description_container"}>
             <ArticleTitle
