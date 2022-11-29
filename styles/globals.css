@@ -24,6 +24,7 @@ a {
 .article_container {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   width: 100%;
   background-color: rgb(219, 214, 214);
   margin-bottom: 2em;
@@ -55,10 +56,11 @@ a {
 .detail_article_title_container {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
 }
 .article_text_container {
-  margin-bottom: 5em;
+  margin-bottom: 3em;
 }
 .text-container {
   background-color: rgb(219, 214, 214);

@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
 .detailarticletitle {
-  margin: 0;
+  font-size: 2em;
+  margin: 0 0 0.5em 0;
 }

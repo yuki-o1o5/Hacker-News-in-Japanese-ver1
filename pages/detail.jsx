@@ -4,7 +4,6 @@ import DetailArticleCommentChild from "../components/DetailArticleCommentChild/D
 import DetailArticleCommentParent from "../components/DetailArticleCommentParent/DetailArticleCommentParent.jsx";
 import DetailArticleText from "../components/DetailArticleText/DetailArticleText.jsx";
 import DetailArticleTitle from "../components/DetailArticleTitle/DetailArticleTitle.jsx";
-import DetailArticleNumber from "../components/DetaillArticleNumber/DetaillArticleNumber.jsx";
 import PageTitle from "../components/PageTitle/PageTitle.jsx";
 
 const Detailpage = () => {
@@ -13,7 +12,6 @@ const Detailpage = () => {
       <PageTitle />
       <div className={"main_container"}>
         <div className="detail_article_title_container">
-          <DetailArticleNumber detailarticlenumber={"1"} />
           <DetailArticleTitle
             detailarticletitle={"faucibus ornare suspendisse sednisi lacus sed"}
           />
