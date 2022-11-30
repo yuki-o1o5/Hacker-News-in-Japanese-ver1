@@ -1,7 +1,7 @@
 import styles from "./ArticleNumber.module.css";
 
-const ArticleNumber = (props) => {
-  return <p className={styles.number}>{props.number}</p>;
+const ArticleNumber = ({ anumber }) => {
+  return <i className={styles.number}>{anumber}</i>;
 };
 
 export default ArticleNumber;

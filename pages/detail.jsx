@@ -20,7 +20,7 @@ const Detailpage = () => {
           <DetailArticleCategoryTitle
             detailarticlecategorytitle={"Article Summary"}
           />
-          <div className="text-container">
+          <div className="main_text-container">
             <DetailArticleText
               detailarticletext={
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor nec feugiat nisl pretium. Purus non enim praesent elementum facilisis. Ultrices sagittis orci a scelerisque purus semper eget duis. At lectus urna duis convallis convallis tellus. Gravida in fermentum et sollicitudin ac orci phasellus egestas. Ut sem nulla pharetra diam sit. Id donec ultrices tincidunt."
@@ -32,7 +32,7 @@ const Detailpage = () => {
           <DetailArticleCategoryTitle
             detailarticlecategorytitle={"Top Comment"}
           />
-          <div className="text-container">
+          <div className="secondry_text-container">
             <DetailArticleCommentParent
               detailarticlecommentparent={
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."

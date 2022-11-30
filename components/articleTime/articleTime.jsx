@@ -1,7 +1,7 @@
 import styles from "./ArticleTime.module.css";
 
-const ArticleTime = (props) => {
-  return <p>{props.time}</p>;
+const ArticleTime = ({ time }) => {
+  return <p className={styles.atime}>{time}</p>;
 };
 
 export default ArticleTime;

@@ -2,15 +2,18 @@
 
 .article_primary_container {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   width: 100%;
+  background-color: rgb(219, 214, 214);
+  padding: 1em 1em 0 1em;
+  margin-bottom: 2em;
 }
 .article_number {
-  width: 10%;
+  width: 8%;
 }
 
 .styles.article_secondary_container {
-  width: 90%;
+  width: 92%;
 }
 
 .article_tertiary_container {
@@ -20,4 +23,16 @@
 }
 .tertiary_container_childre {
   width: 30%;
+}
+
+@media (max-width: 599px) {
+  .main_container {
+    margin: 1em 1em;
+    padding: 0 4%;
+  }
+  .article_primary_container {
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 2em;
+  }
 }

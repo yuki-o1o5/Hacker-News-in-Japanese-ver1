@@ -1,0 +1,9 @@
+.article_title{
+  margin-bottom: 0;
+}
+
+@media (max-width: 599px) {
+  .article_title{
+    font-size: 20px;
+  }
+}
