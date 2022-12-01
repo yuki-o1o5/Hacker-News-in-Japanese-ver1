@@ -4,7 +4,6 @@ import ArticleAuthor from "../articleAuthor/articleAuthor";
 import ArticleTime from "../articleTime/articleTime";
 import ArticlePoints from "../articlePoints/articlePoints";
 import styles from "./Article.module.css";
-import Link from "next/link";
 
 const Article = ({ anumber, atitle, author, time, points }) => {
   return (
