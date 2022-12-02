@@ -1,34 +1,38 @@
+import { useEffect, useState } from "react";
 import Article from "../../components/Article/Article.jsx";
 import ArticleCategoryTitle from "../../components/articlesCategoryTitle/articlesCategoryTitle.jsx";
 import PageDescription from "../../components/pageDescription/pageDescription.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 
 export async function getStaticProps() {
-  const resone = await fetch(
+  const res = await fetch(
     `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty&limitToFirst=3&orderBy="$key"`
   );
-
-  const restwo = await fetch(
-    `https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty"`
-  );
-
-  const topstories = await resone.json();
-  const eachstories = await restwo.json();
-
+  const hackerTopIds = await res.json();
   return {
-    props: { topstories, eachstories },
+    props: { hackerTopIds },
     revalidate: 10,
   };
 }
 
 const Mainpage = (props) => {
-  const topthree = props.topstories;
-  topthree.forEach((topeach) => console.log(topeach));
+  useEffect(() => {
+    fetchArticleDetails(props.hackerTopIds);
+  }, [props.hackerTopIds]);
 
-  console.log(props.stories);
+  const [articles, setArticles] = useState([]);
 
-  const eachstory = props.eachstories;
-  console.log(eachstory);
+  const fetchArticleDetails = async (hackerTopIds) => {
+    hackerTopIds.forEach(async (id) => {
+      const res = await fetch(
+        "https://hacker-news.firebaseio.com/v0/item/" +
+          id +
+          ".json?print=pretty"
+      );
+      const details = await res.json();
+      setArticles((prev) => [...prev, details]);
+    });
+  };
 
   return (
     <div>
@@ -36,30 +40,16 @@ const Mainpage = (props) => {
       <div className={"main_container"}>
         <ArticleCategoryTitle categoryTitle={"Recent in One Hour"} />
         <div>
-          <Article
-            anumber="1"
-            atitle="faucibus ornare suspendisse sed nisi lacus sed"
-            author="by nunc sed"
-            time="2022,01,01"
-            points="96 p0ints"
-          />
+          {articles.map((article) => (
+            <Article
+              anumber="1"
+              atitle={article.title}
+              author={article.by}
+              time={article.time}
+              point={article.score}
+            />
+          ))}
         </div>
-        <Article
-          anumber="2"
-          atitle="faucibus ornare suspendisse sed nisi lacus sed"
-          author="by nunc sed"
-          time="2022,01,01"
-          points="96 p0ints"
-        />
-
-        <Article
-          anumber="3"
-          atitle="faucibus ornare suspendisse sed nisi lacus sed"
-          author="by nunc sed"
-          time="2022,01,01"
-          points="96 p0ints"
-        />
-
         <PageDescription />
       </div>
     </div>
