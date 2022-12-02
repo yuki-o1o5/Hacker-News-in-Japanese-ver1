@@ -6,33 +6,35 @@ import DetailArticleText from "../../components/DetailArticleText/DetailArticleT
 import DetailArticleTitle from "../../components/DetailArticleTitle/DetailArticleTitle.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 
-export async function getStaticProps() {
-  const res = await fetch(
-    `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty`
-  );
-  const topstories = await res.json();
 
-  return {
-    props: { topstories },
-    revaliade: 10,
-  };
-}
 
-export async function getStaticPaths() {
-  const res = await fetch(
-    `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty`
-  );
-  const topstories = await res.json();
+// export async function getStaticProps() {
+//   const res = await fetch(
+//     `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty`
+//   );
+//   const topstories = await res.json();
 
-  const paths = topstories.map((topstory) => ({
-    params: { id: topstory.id },
-  }));
+//   return {
+//     props: { topstories },
+//     revaliade: 10,
+//   };
+// }
 
-  return {
-    paths,
-    fallback: false,
-  };
-}
+// export async function getStaticPaths() {
+//   const res = await fetch(
+//     `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty`
+//   );
+//   const topstories = await res.json();
+
+//   const paths = topstories.map((topstory) => ({
+//     params: { id: topstory.id },
+//   }));
+
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
 
 const Detailpage = () => {
   const router = useRouter();
