@@ -16,7 +16,7 @@ export async function getStaticProps() {
   };
 }
 
-const Mainpage = (props) => {
+const Allpage = (props) => {
   useEffect(() => {
     fetchArticleDetails(props.hackerTopIds);
   }, [props.hackerTopIds]);
@@ -34,25 +34,6 @@ const Mainpage = (props) => {
       setArticles((prev) => [...prev, details]);
     });
   };
-
-  // const deepl = require("deepl-node");
-
-  // const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
-  // const translator = new deepl.Translator(authKey);
-
-  // translator
-  //   .getUsage()
-  //   .then((usage) => {
-  //     console.log(usage);
-  //     return translator.translateText("Hello, world!", null, "fr");
-  //   })
-  //   .then((result) => {
-  //     console.log(result.text); // Bonjour, le monde !
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //     process.exit?.(1);
-  //   });
 
   return (
     <div>
@@ -77,4 +58,4 @@ const Mainpage = (props) => {
   );
 };
 
-export default Mainpage;
+export default Allpage;
