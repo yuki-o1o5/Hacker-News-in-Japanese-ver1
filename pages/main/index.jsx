@@ -3,12 +3,14 @@ import Article from "../../components/Article/Article.jsx";
 import ArticleCategoryTitle from "../../components/articlesCategoryTitle/articlesCategoryTitle.jsx";
 import PageDescription from "../../components/pageDescription/pageDescription.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
+import * as deepl from "deepl-node";
 
 export async function getStaticProps() {
   const res = await fetch(
     `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty&limitToFirst=3&orderBy="$key"`
   );
   const hackerTopIds = await res.json();
+
   return {
     props: { hackerTopIds },
     revalidate: 10,
@@ -34,19 +36,39 @@ const Mainpage = (props) => {
     });
   };
 
+  const deepl = require("deepl-node");
+
+  const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
+  const translator = new deepl.Translator(authKey);
+
+  translator
+    .getUsage()
+    .then((usage) => {
+      console.log(usage);
+      return translator.translateText("Hello, world!", null, "fr");
+    })
+    .then((result) => {
+      console.log(result.text); // Bonjour, le monde !
+    })
+    .catch((error) => {
+      console.error(error);
+      process.exit?.(1);
+    });
+
   return (
     <div>
       <PageTitle />
       <div className={"main_container"}>
         <ArticleCategoryTitle categoryTitle={"Recent in One Hour"} />
         <div>
-          {articles.map((article) => (
+          {articles.map((article, i) => (
             <Article
               anumber="1"
+              key={`article-list-${i}`}
               atitle={article.title}
               author={article.by}
               time={article.time}
-              point={article.score}
+              points={article.score}
             />
           ))}
         </div>
