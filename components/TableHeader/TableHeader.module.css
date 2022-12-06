@@ -1,2 +1,13 @@
 .tableHeader {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.tableTitle {
+  width: 80%;
+}
+
+.tablePoints{
+  width: 20%;
 }

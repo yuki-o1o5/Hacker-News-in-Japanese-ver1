@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import Article from "../../components/Article/Article.jsx";
-import ArticleCategoryTitle from "../../components/articlesCategoryTitle/articlesCategoryTitle.jsx";
-import PageDescription from "../../components/pageDescription/pageDescription.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
+import TableHeader from "../../components/TableHeader/TableHeader.jsx";
+import DayTitleAndPoints from "../../components/DayTitleAndPoints/DayTitleAndPoints.jsx";
 
 export async function getStaticProps() {
   const res = await fetch(
@@ -39,20 +38,48 @@ const Allpage = (props) => {
     <div>
       <PageTitle />
       <div className={"main_container"}>
-        <ArticleCategoryTitle categoryTitle={"Recent in One Hour"} />
-        <div>
-          {articles.map((article) => (
-            <Article
-              anumber="1"
-              // key={`article-list-${i}`}
-              atitle={article.title}
-              author={article.by}
-              time={article.time}
-              points={article.score}
-            />
-          ))}
-        </div>
-        <PageDescription />
+        <Date date={"2022/12/01"} />
+        <TableHeader />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
+        <DayTitleAndPoints
+          dayTitle={"faucibus ornare suspendisse sed nisi lacus sed "}
+          dayPoints={"96"}
+        />
       </div>
     </div>
   );

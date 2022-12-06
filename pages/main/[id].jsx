@@ -38,13 +38,19 @@ export async function getStaticPaths() {
 const Detailpage = (props) => {
   const router = useRouter();
   const hoge = router.query.id;
-  // console.log(hoge);
+  console.log(hoge);
 
   useEffect(() => {
     fetchArticleDetails(hoge);
   }, [hoge]);
 
+  useEffect(() => {
+    fetchCommentDetails(comment);
+  }, [comment]);
+
   const [article, setArticles] = useState({});
+
+  const [comment, setComments] = useState({});
 
   const fetchArticleDetails = async (hackerTopId) => {
     const res = await fetch(
@@ -52,22 +58,29 @@ const Detailpage = (props) => {
         hackerTopId +
         ".json?print=pretty"
     );
-
     const details = await res.json();
     // console.log(details);
     setArticles(details);
+
+    const fetchCommentDetails = async (commentId) => {
+      const res = await fetch(
+        "https://hacker-news.firebaseio.com/v0/item/" +
+          commentId +
+          ".json?print=pretty"
+      );
+      const comments = await res.json();
+      setComments(comments);
+    };
   };
 
-  console.log(article.title);
+  // console.log(article.kids[0]);
 
   return (
     <div>
       <PageTitle />
       <div className={"main_container"}>
         <div className="detail_article_title_container">
-          <DetailArticleTitle
-            detailarticletitle={"faucibus ornare suspendisse sednisi lacus sed"}
-          />
+          <DetailArticleTitle detailarticletitle={article.title} />
         </div>
         <div className="article_text_container">
           <DetailArticleCategoryTitle
