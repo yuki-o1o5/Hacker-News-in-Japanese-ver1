@@ -53,6 +53,7 @@ const Mainpage = (props) => {
   //     console.error(error);
   //     process.exit?.(1);
   //   });
+  console.log(articles);
 
   return (
     <div>
@@ -63,11 +64,11 @@ const Mainpage = (props) => {
           {articles.map((article) => (
             <Article
               anumber="1"
-              // key={`article-list-${i}`}
               atitle={article.title}
               author={article.by}
               time={article.time}
               points={article.score}
+              // {article.id} --> id
             />
           ))}
         </div>
