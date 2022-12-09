@@ -7,9 +7,8 @@ import styles from "./Article.module.css";
 const Article = ({ articleTitle, author, time, points }) => {
   return (
     <div className={styles.article_primary_container}>
-      <div className={styles.article_secondary_container}>
         <ArticleTitle articleTitle={articleTitle} />
-        <div className={styles.article_tertiary_container}>
+        <div className={styles.article_secondry_container}>
           <div className={styles.tertiary_container_children}>
             <ArticleAuthor author={author} />
           </div>
@@ -20,7 +19,6 @@ const Article = ({ articleTitle, author, time, points }) => {
             <ArticlePoints points={points} />
           </div>
         </div>
-      </div>
     </div>
   );
 };

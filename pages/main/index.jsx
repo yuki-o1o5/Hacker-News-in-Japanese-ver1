@@ -31,7 +31,7 @@ export async function getStaticProps() {
 }
 
 const Mainpage = (props) => {
-  // console.log(props.stories);
+  console.log(props.stories);
   return (
     <div>
       <PageTitle />
