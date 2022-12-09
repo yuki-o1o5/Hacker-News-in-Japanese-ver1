@@ -24,7 +24,7 @@ h2 {
   padding: 0 4%;
 }
 
-/* home page */
+/* main page */
 .article_container {
   display: flex;
   justify-content: space-between;
@@ -33,6 +33,17 @@ h2 {
   background-color: rgb(219, 214, 214);
   margin-bottom: 2em;
   padding: 0.5em;
+}
+
+.flex_container {
+  display: flex;
+}
+.secondry_container {
+  display: flex;
+  flex-direction: column;
+}
+.each_number_container {
+  margin-bottom: 5rem;
 }
 
 /* detail page */

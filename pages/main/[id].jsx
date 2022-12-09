@@ -6,8 +6,6 @@ import DetailArticleText from "../../components/DetailArticleText/DetailArticleT
 import DetailArticleTitle from "../../components/DetailArticleTitle/DetailArticleTitle.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 
-
-
 // export async function getStaticProps() {
 //   const res = await fetch(
 //     `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty`
@@ -36,7 +34,7 @@ import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 //   };
 // }
 
-const Detailpage = () => {
+const DetailPage = () => {
   const router = useRouter();
   const id = router.query.id;
 
@@ -84,4 +82,4 @@ const Detailpage = () => {
   );
 };
 
-export default Detailpage;
+export default DetailPage;
