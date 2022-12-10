@@ -1,27 +1,17 @@
 @charset "UTF-8";
 
 .article_primary_container {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
   background-color: rgb(219, 214, 214);
   padding: 1em 1em 0 1em;
   margin-bottom: 2em;
 }
-.article_number {
-  width: 8%;
-}
 
-.styles.article_secondary_container {
-  width: 92%;
-}
-
-.article_tertiary_container {
+.article_secondry_container {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
-.tertiary_container_childre {
+.tertiary_container_children {
   width: 30%;
 }
 

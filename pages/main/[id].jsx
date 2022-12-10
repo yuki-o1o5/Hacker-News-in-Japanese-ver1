@@ -1,5 +1,3 @@
-import { useRouter } from "next/router.js";
-import { useEffect, useState } from "react";
 import DetailArticleCategoryTitle from "../../components/DetailArticleCategoryTitle/DetailArticleCategoryTitle.jsx";
 import DetailArticleCommentChild from "../../components/DetailArticleCommentChild/DetailArticleCommentChild.jsx";
 import DetailArticleCommentParent from "../../components/DetailArticleCommentParent/DetailArticleCommentParent.jsx";
@@ -7,26 +5,68 @@ import DetailArticleText from "../../components/DetailArticleText/DetailArticleT
 import DetailArticleTitle from "../../components/DetailArticleTitle/DetailArticleTitle.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 
-export async function getStaticProps() {
-  const res = await fetch(
+export async function getStaticProps(params) {
+  // 1.This is top 3 story ids. ->[33935566,33934580,33936366]
+  const resOne = await fetch(
     `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty&limitToFirst=3&orderBy="$key"`
   );
-  const hackerTopIds = await res.json();
+  const topstories = await resOne.json();
+
+  // 2.This is each story details. ->[{...},{...},{...}]
+  const getDetailUrl = async (id) => {
+    const detail = await fetch(
+      "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty"
+    );
+    const eachStoryDetails = await detail.json();
+    return eachStoryDetails;
+  };
+  const stories = await Promise.all(
+    topstories.map((topstory) => getDetailUrl(topstory))
+  );
+
+  // 3.This is each comment. ->[{...},{...},{...}]
+  const getCommentUrl = async (commentId) => {
+    const res = await fetch(
+      "https://hacker-news.firebaseio.com/v0/item/" +
+        commentId +
+        ".json?print=pretty"
+    );
+    const comments = await res.json();
+    return comments;
+  };
+
+  const topComments = await Promise.all(
+    topstories.map((topstory) => getCommentUrl(topstory))
+  );
 
   return {
-    props: { hackerTopIds },
+    props: { stories, topComments },
     revalidate: 10,
   };
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(
+  // 1.This is top 3 story ids.
+  const resOne = await fetch(
     `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty&limitToFirst=3&orderBy="$key"`
   );
-  const hackerTopIds = await res.json();
+  const topstories = await resOne.json();
 
-  const paths = hackerTopIds.map((hackerTopId) => ({
-    params: { id: hackerTopId.toString() },
+  // // 2.This is each story details.
+  // const getDetailUrl = async (id) => {
+  //   const detail = await fetch(
+  //     "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty"
+  //   );
+  //   const eachStoryDetails = await detail.json();
+  //   return eachStoryDetails;
+  // };
+
+  // const stories = await Promise.all(
+  //   topstories.map((topstory) => getDetailUrl(topstory))
+  // );
+
+  const paths = topstories.map((topstory) => ({
+    params: { id: topstory.toString() },
   }));
 
   return {
@@ -36,51 +76,19 @@ export async function getStaticPaths() {
 }
 
 const Detailpage = (props) => {
-  const router = useRouter();
-  const hoge = router.query.id;
-  console.log(hoge);
-
-  useEffect(() => {
-    fetchArticleDetails(hoge);
-  }, [hoge]);
-
-  useEffect(() => {
-    fetchCommentDetails(comment);
-  }, [comment]);
-
-  const [article, setArticles] = useState({});
-
-  const [comment, setComments] = useState({});
-
-  const fetchArticleDetails = async (hackerTopId) => {
-    const res = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" +
-        hackerTopId +
-        ".json?print=pretty"
-    );
-    const details = await res.json();
-    // console.log(details);
-    setArticles(details);
-
-    const fetchCommentDetails = async (commentId) => {
-      const res = await fetch(
-        "https://hacker-news.firebaseio.com/v0/item/" +
-          commentId +
-          ".json?print=pretty"
-      );
-      const comments = await res.json();
-      setComments(comments);
-    };
-  };
-
-  // console.log(article.kids[0]);
+  console.log(props.stories);
 
   return (
     <div>
       <PageTitle />
       <div className={"main_container"}>
         <div className="detail_article_title_container">
-          <DetailArticleTitle detailarticletitle={article.title} />
+          {/* {props.stories.map((story, i) => (
+            <DetailArticleTitle
+              detailarticletitle={story.title}
+              key={`story-list-${i}`}
+            />
+          ))} */}
         </div>
         <div className="article_text_container">
           <DetailArticleCategoryTitle
