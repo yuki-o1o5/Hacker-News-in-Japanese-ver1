@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.categoryTitle {
+  font-size: 2em;
+  margin-top: 0;
+}
+
+@media (max-width: 599px) {
+  .categoryTitle {
+    font-size: 1.5em;
+  }
+}
