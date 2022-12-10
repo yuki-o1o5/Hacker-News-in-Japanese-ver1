@@ -1,7 +1,7 @@
-import ArticleTitle from "../articleTitle/articleTitle";
+import ArticleTitle from "../ArticleTitle/ArticleTitle";
 import ArticleAuthor from "../articleAuthor/articleAuthor";
-import ArticleTime from "../articleTime/articleTime";
-import ArticlePoints from "../articlePoints/articlePoints";
+import ArticleTime from "../ArticleTime/ArticleTime";
+import ArticlePoints from "../ArticlePoints/ArticlePoints";
 import styles from "./Article.module.css";
 
 const Article = ({ articleTitle, author, time, points }) => {
