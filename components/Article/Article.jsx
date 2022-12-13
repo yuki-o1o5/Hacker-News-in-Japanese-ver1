@@ -5,7 +5,6 @@ import ArticlePoints from "../ArticlePoints/ArticlePoints.jsx";
 import ArticleNumber from "../ArticleNumber/ArticleNumber.jsx";
 import styles from "./Article.module.css";
 import Link from "next/link.js";
-
 import React from "react";
 
 const Article = ({ articleTitle, author, time, points, id, index }) => {

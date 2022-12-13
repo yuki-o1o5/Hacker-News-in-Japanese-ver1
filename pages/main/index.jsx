@@ -1,5 +1,4 @@
 import Article from "../../components/Article/Article.jsx";
-import ArticleNumber from "../../components/ArticleNumber/ArticleNumber.jsx";
 import ArticleCategoryTitle from "../../components/ArticlesCategoryTitle/ArticlesCategoryTitle.jsx";
 import PageDescription from "../../components/PageDescription/PageDescription.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
