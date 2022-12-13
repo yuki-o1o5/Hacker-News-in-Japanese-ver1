@@ -57,17 +57,6 @@ const Mainpage = (props) => {
       <div className={"main_container"}>
         <ArticleCategoryTitle categoryTitle={"Recent in One Hour"} />
         <div className={"flex_container"}>
-          <div className={"secondry_container"}>
-            <div className={"each_number_container"}>
-              <ArticleNumber articleNumber="1" />
-            </div>
-            <div className={"each_number_container"}>
-              <ArticleNumber articleNumber="2" />
-            </div>
-            <div className={"each_number_container"}>
-              <ArticleNumber articleNumber="3" />
-            </div>
-          </div>
           <div className="tertiary_container">
             {props.stories.map((story, i) => (
               <Article
@@ -76,6 +65,8 @@ const Mainpage = (props) => {
                 author={story.by}
                 time={story.time}
                 points={story.score}
+                id={story.id}
+                index={i + 1}
               />
             ))}
           </div>

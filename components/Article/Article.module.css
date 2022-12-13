@@ -1,12 +1,20 @@
 @charset "UTF-8";
 
+.article_number_container {
+  padding-right: 1em;
+}
 .article_primary_container {
+  display: flex;
   background-color: rgb(219, 214, 214);
   padding: 1em 1em 0 1em;
   margin-bottom: 2em;
 }
-
 .article_secondry_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.article_tertiary_container {
   display: flex;
   justify-content: space-between;
   width: 100%;

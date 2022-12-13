@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
 .detailarticlecommentchild {
+  background-color: rgba(41, 40, 40, 0.2);
   padding-left: 2em;
 }

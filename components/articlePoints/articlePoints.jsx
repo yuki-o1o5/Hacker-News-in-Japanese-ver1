@@ -5,3 +5,5 @@ const ArticlePoints = ({ points }) => {
 };
 
 export default ArticlePoints;
+
+//
