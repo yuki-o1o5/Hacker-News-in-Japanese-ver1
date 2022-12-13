@@ -1,5 +1,5 @@
 import ArticleTitle from "../ArticleTitle/ArticleTitle.jsx";
-import ArticleAuthor from "../ArticleAuthor/articleAuthor.jsx";
+import ArticleAuthor from "../ArticleAuthor/ArticleAuthor.jsx";
 import ArticleTime from "../ArticleTime/ArticleTime.jsx";
 import ArticlePoints from "../ArticlePoints/ArticlePoints.jsx";
 import ArticleNumber from "../ArticleNumber/ArticleNumber.jsx";
