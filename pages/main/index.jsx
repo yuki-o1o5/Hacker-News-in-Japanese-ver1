@@ -19,34 +19,31 @@ export async function getStaticProps() {
     return eachStoryDetails;
   };
 
+  // 3 This is DeepL Api
   const stories = await Promise.all(
     topstories.map((topstory) => getDetailUrl(topstory))
   );
+
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: "DeepL-Auth-Key 58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx",
+    },
+  };
+
+  fetch(
+    "http://api-free.deepl.com/v2/translate?text=hello&target_lang=JA",
+    options
+  )
+    .then((response) => response.json())
+    .then((response) => console.log(response))
+    .catch((err) => console.error(err));
 
   return {
     props: { stories },
     revalidate: 10,
   };
 }
-
-// const deepl = require("deepl-node");
-
-// const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
-// const translator = new deepl.Translator(authKey);
-
-// translator
-//   .getUsage()
-//   .then((usage) => {
-//     console.log(usage);
-//     return translator.translateText("Hello, world!", null, "fr");
-//   })
-//   .then((result) => {
-//     console.log(result.text); // Bonjour, le monde !
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//     process.exit?.(1);
-//   });
 
 const Mainpage = (props) => {
   console.log(props.stories);
