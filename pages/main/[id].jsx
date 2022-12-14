@@ -13,7 +13,7 @@ export async function getStaticProps(context) {
   // 2.This is a story detail. ->{...}
   const getDetailUrl = async (id) => {
     const detail = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
     );
     const eachStoryDetails = await detail.json();
     return eachStoryDetails;
@@ -23,9 +23,7 @@ export async function getStaticProps(context) {
   // 3.This is the top comment.
   const getCommentUrl = async (commentId) => {
     const res = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" +
-        commentId +
-        ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${commentId}.json?print=pretty`
     );
     const comments = await res.json();
     return comments;

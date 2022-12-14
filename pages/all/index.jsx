@@ -13,7 +13,7 @@ export async function getStaticProps() {
   // 2.This is each story details.
   const getDetailUrl = async (id) => {
     const detail = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
     );
     const eachStoryDetails = await detail.json();
     return eachStoryDetails;
