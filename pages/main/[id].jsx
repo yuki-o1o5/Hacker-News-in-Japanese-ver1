@@ -30,7 +30,7 @@ export async function getStaticProps(context) {
   };
 
   // 3.This is the comments of the top comment .
-  const topComment = await getCommentUrl(story.kids[0]);
+  const topComment = story.kids ? await getCommentUrl(story.kids[0]) : "";
   // console.log("topComment", topComment);
 
   const topCommentReplies = await Promise.all(
