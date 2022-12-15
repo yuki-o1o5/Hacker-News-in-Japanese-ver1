@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 import TableHeader from "../../components/TableHeader/TableHeader.jsx";
 import DayTitleAndPoints from "../../components/DayTitleAndPoints/DayTitleAndPoints.jsx";
