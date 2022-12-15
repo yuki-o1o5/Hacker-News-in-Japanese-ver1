@@ -13,7 +13,7 @@ const DayTitleAndPoints = (props) => {
   return (
     <>
       {isClient ? (
-        <Link href={"main/" + props.id}>
+        <Link href={`main/${props.id}`}>
           <div className={styles.dayTitleAndPoints}>
             <p className={styles.dayTitle}>{props.dayTitle}</p>
             <p className={styles.dayPoints}>{props.dayPoints}</p>

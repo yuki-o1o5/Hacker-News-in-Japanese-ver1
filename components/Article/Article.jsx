@@ -17,7 +17,7 @@ const Article = ({ articleTitle, author, time, points, id, index }) => {
   return (
     <>
       {isClient ? (
-        <Link href={"main/" + id}>
+        <Link href={`main/${id}`}>
           <div className={styles.article_primary_container}>
             <div className={styles.article_number_container}>
               <ArticleNumber articleNumber={index} />
