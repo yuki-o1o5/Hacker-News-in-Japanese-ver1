@@ -32,15 +32,75 @@ export async function getStaticProps(context) {
   };
 
   // 3.This is the comments of the top comment .
-  const topComment = await getCommentUrl(story.kids[0]);
-  // console.log("topComment", topComment);
+  const topComment = story.kids ? await getCommentUrl(story.kids[0]) : "";
+  console.log("topComment", topComment);
 
   const topCommentReplies = await Promise.all(
     (topComment.kids || []).map((topCommentKid) => getCommentUrl(topCommentKid))
   );
 
+  // 4. This is Japanese title
+  const translateToJapaneseTitle = async (text) => {
+    const deepl = require("deepl-node");
+    const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
+    const translator = new deepl.Translator(authKey);
+    const translatedResponse = await translator.translateText(
+      text.title,
+      null,
+      "ja"
+    );
+    console.log(translatedResponse.text);
+    return {
+      by: text.by,
+      descendants: text.descendants,
+      id: text.id,
+      kids: text.kids || [],
+      score: text.score,
+      time: text.time,
+      title: translatedResponse.text,
+      type: text.type,
+      url: text.url,
+    };
+  };
+
+  const japaneseStory = await translateToJapaneseTitle(story);
+
+  const translateToJapaneseTopComment = async (text) => {
+    const deepl = require("deepl-node");
+    const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
+    const translator = new deepl.Translator(authKey);
+    const translatedResponse = await translator.translateText(
+      text.text,
+      null,
+      "ja"
+    );
+    console.log(translatedResponse.text);
+    return {
+      by: text.by,
+      id: text.id,
+      kids: text.kids || [],
+      parent: text.parent,
+      text: translatedResponse.text,
+      time: text.id,
+      type: text.type,
+    };
+  };
+
+  const japaneseTopComment = topComment
+    ? await translateToJapaneseTopComment(topComment)
+    : "";
+
+  const japaneseTopCommentReplies = topCommentReplies
+    ? await Promise.all(
+        topCommentReplies.map((topCommentReply) =>
+          translateToJapaneseTopComment(topCommentReply)
+        )
+      )
+    : "";
+
   return {
-    props: { story, topComment, topCommentReplies },
+    // props: { story, topComment, topCommentReplies },
+    props: { japaneseStory, japaneseTopComment, japaneseTopCommentReplies },
     revalidate: 10,
   };
 }
@@ -62,15 +122,21 @@ export async function getStaticPaths() {
   };
 }
 
-const DetailPage = ({ story, topComment, topCommentReplies }) => {
-  // console.log(story);
-  // console.log(topComment);
+const DetailPage = ({
+  japaneseStory,
+  japaneseTopComment,
+  japaneseTopCommentReplies,
+}) => {
+  console.log(japaneseStory);
+  console.log(japaneseTopComment);
+  console.log(japaneseTopCommentReplies);
+
   return (
     <div>
       <PageTitle />
       <div className={"main_container"}>
         <div className="detail_article_title_container">
-          <DetailArticleTitle detailarticletitle={story.title} />
+          <DetailArticleTitle detailarticletitle={japaneseStory.title} />
         </div>
         <div className="article_text_container">
           <DetailArticleCategoryTitle
@@ -90,13 +156,13 @@ const DetailPage = ({ story, topComment, topCommentReplies }) => {
           />
           <div className="secondry_text-container">
             <DetailArticleCommentParent
-              detailarticlecommentparent={topComment.text}
+              detailarticlecommentparent={japaneseTopComment.text}
             />
             <div>
               {" "}
-              {topCommentReplies.map((topCommentReply, i) => (
+              {japaneseTopCommentReplies.map((japaneseTopCommentReply, i) => (
                 <DetailArticleCommentChild
-                  detailarticlecommentchild={topCommentReply.text}
+                  detailarticlecommentchild={japaneseTopCommentReply.text}
                   key={`story-list-${i}`}
                 />
               ))}

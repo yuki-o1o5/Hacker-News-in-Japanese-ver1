@@ -13,40 +13,54 @@ export async function getStaticProps() {
   // 2.This is each story details.
   const getDetailUrl = async (id) => {
     const detail = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
     );
     const eachStoryDetails = await detail.json();
     return eachStoryDetails;
   };
 
-  // 3 This is DeepL Api
+  const translateToJapanese = async (text) => {
+    const deepl = require("deepl-node");
+    const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
+    const translator = new deepl.Translator(authKey);
+
+    const translatedResponse = await translator.translateText(
+      text.title,
+      null,
+      "ja"
+    );
+
+    console.log(translatedResponse.text);
+
+    return {
+      by: text.by,
+      descendants: text.descendants,
+      id: text.id,
+      kids: text.kids || [],
+      score: text.score,
+      time: text.time,
+      title: translatedResponse.text,
+      type: text.type,
+      url: text.url,
+    };
+  };
+
   const stories = await Promise.all(
     topstories.map((topstory) => getDetailUrl(topstory))
   );
 
-  const options = {
-    method: "POST",
-    headers: {
-      Authorization: "DeepL-Auth-Key 58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx",
-    },
-  };
-
-  fetch(
-    "http://api-free.deepl.com/v2/translate?text=hello&target_lang=JA",
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => console.log(response))
-    .catch((err) => console.error(err));
+  const traslatedStories = await Promise.all(
+    stories.map((story) => translateToJapanese(story))
+  );
 
   return {
-    props: { stories },
+    props: { traslatedStories },
     revalidate: 10,
   };
 }
 
 const Mainpage = (props) => {
-  console.log(props.stories);
+  console.log(props.traslatedStories);
   return (
     <div>
       <PageTitle />
@@ -54,7 +68,7 @@ const Mainpage = (props) => {
         <ArticleCategoryTitle categoryTitle={"Recent in One Hour"} />
         <div className={"flex_container"}>
           <div className="tertiary_container">
-            {props.stories.map((story, i) => (
+            {props.traslatedStories.map((story, i) => (
               <Article
                 key={`story-list-${i}`}
                 articleTitle={story.title}
