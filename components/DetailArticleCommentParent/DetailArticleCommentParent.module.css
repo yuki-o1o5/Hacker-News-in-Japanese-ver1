@@ -1,4 +1,5 @@
 .comment_parent {
   padding: 0.25;
-  background-color: rgba(41, 40, 40, 0.2);
+  background-color: #fff;
+  margin-bottom: 2em;
 }
