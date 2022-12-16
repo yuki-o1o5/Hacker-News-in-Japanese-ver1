@@ -13,7 +13,7 @@ export async function getStaticProps(context) {
   // 2.This is a story detail. ->{...}
   const getDetailUrl = async (id) => {
     const detail = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
     );
     const eachStoryDetails = await detail.json();
     return eachStoryDetails;
@@ -23,24 +23,81 @@ export async function getStaticProps(context) {
   // 3.This is the top comment.
   const getCommentUrl = async (commentId) => {
     const res = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" +
-        commentId +
-        ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${commentId}.json?print=pretty`
     );
     const comments = await res.json();
     return comments;
   };
 
   // 3.This is the comments of the top comment .
-  const topComment = await getCommentUrl(story.kids[0]);
+  const topComment = story.kids ? await getCommentUrl(story.kids[0]) : "";
   // console.log("topComment", topComment);
 
   const topCommentReplies = await Promise.all(
     (topComment.kids || []).map((topCommentKid) => getCommentUrl(topCommentKid))
   );
 
+  // 4. This is Japanese title
+  const translateToJapaneseTitle = async (text) => {
+    const deepl = require("deepl-node");
+    const authKey = process.env.DEEPL_AUTH_KEY;
+    const translator = new deepl.Translator(authKey);
+    const translatedResponse = await translator.translateText(
+      text.title,
+      null,
+      "ja"
+    );
+    console.log(translatedResponse.text);
+    return {
+      by: text.by,
+      descendants: text.descendants,
+      id: text.id,
+      kids: text.kids || [],
+      score: text.score,
+      time: text.time,
+      title: translatedResponse.text,
+      type: text.type,
+      url: text.url,
+    };
+  };
+
+  const japaneseStory = await translateToJapaneseTitle(story);
+
+  const translateToJapaneseTopComment = async (text) => {
+    const deepl = require("deepl-node");
+    const authKey = process.env.DEEPL_AUTH_KEY;
+    const translator = new deepl.Translator(authKey);
+    const translatedResponse = await translator.translateText(
+      text.text,
+      null,
+      "ja"
+    );
+    // console.log(translatedResponse.text);
+    return {
+      by: text.by,
+      id: text.id,
+      kids: text.kids || [],
+      parent: text.parent,
+      text: translatedResponse.text,
+      time: text.id,
+      type: text.type,
+    };
+  };
+
+  const japaneseTopComment = topComment
+    ? await translateToJapaneseTopComment(topComment)
+    : "";
+
+  const japaneseTopCommentReplies = topCommentReplies
+    ? await Promise.all(
+        topCommentReplies.map((topCommentReply) =>
+          translateToJapaneseTopComment(topCommentReply)
+        )
+      )
+    : "";
+
   return {
-    props: { story, topComment, topCommentReplies },
+    props: { japaneseStory, japaneseTopComment, japaneseTopCommentReplies },
     revalidate: 10,
   };
 }
@@ -55,22 +112,24 @@ export async function getStaticPaths() {
   const paths = topstories.map((topstory) => ({
     params: { id: topstory.toString() },
   }));
-  console.log(paths);
+  // console.log(paths);
   return {
     paths,
     fallback: false,
   };
 }
 
-const DetailPage = ({ story, topComment, topCommentReplies }) => {
-  // console.log(story);
-  // console.log(topComment);
+const DetailPage = ({
+  japaneseStory,
+  japaneseTopComment,
+  japaneseTopCommentReplies,
+}) => {
   return (
     <div>
       <PageTitle />
       <div className={"main_container"}>
         <div className="detail_article_title_container">
-          <DetailArticleTitle detailarticletitle={story.title} />
+          <DetailArticleTitle detailarticletitle={japaneseStory.title} />
         </div>
         <div className="article_text_container">
           <DetailArticleCategoryTitle
@@ -90,14 +149,14 @@ const DetailPage = ({ story, topComment, topCommentReplies }) => {
           />
           <div className="secondry_text-container">
             <DetailArticleCommentParent
-              detailarticlecommentparent={topComment.text}
+              detailarticlecommentparent={japaneseTopComment.text}
             />
             <div>
               {" "}
-              {topCommentReplies.map((topCommentReply, i) => (
+              {japaneseTopCommentReplies.map((japaneseTopCommentReply, i) => (
                 <DetailArticleCommentChild
-                  detailarticlecommentchild={topCommentReply.text}
-                  key={`story-list-${i}`}
+                  detailarticlecommentchild={japaneseTopCommentReply.text}
+                  key={`japaneseTopCommentReply-list-${i}`}
                 />
               ))}
             </div>

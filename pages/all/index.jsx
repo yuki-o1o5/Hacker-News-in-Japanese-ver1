@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 import TableHeader from "../../components/TableHeader/TableHeader.jsx";
 import DayTitleAndPoints from "../../components/DayTitleAndPoints/DayTitleAndPoints.jsx";
@@ -13,7 +12,7 @@ export async function getStaticProps() {
   // 2.This is each story details.
   const getDetailUrl = async (id) => {
     const detail = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
     );
     const eachStoryDetails = await detail.json();
     return eachStoryDetails;
@@ -23,25 +22,57 @@ export async function getStaticProps() {
     topstories.map((topstory) => getDetailUrl(topstory))
   );
 
+  //  3.This is each Japanese story details
+  const translateToJapanese = async (text) => {
+    const deepl = require("deepl-node");
+    const authKey = process.env.DEEPL_AUTH_KEY;
+    const translator = new deepl.Translator(authKey);
+
+    const translatedResponse = await translator.translateText(
+      text.title,
+      null,
+      "ja"
+    );
+
+    console.log(translatedResponse.text);
+
+    return {
+      by: text.by,
+      descendants: text.descendants,
+      id: text.id,
+      kids: text.kids || [],
+      score: text.score,
+      time: text.time,
+      title: translatedResponse.text,
+      type: text.type,
+      url: text.url,
+    };
+  };
+
+  const japaneseStories = await Promise.all(
+    stories.map((story) => translateToJapanese(story))
+  );
+
   return {
-    props: { stories },
+    props: { japaneseStories },
     revalidate: 10,
   };
 }
 
 const Allpage = (props) => {
+  console.log(props.japaneseStories);
   return (
     <div>
       <PageTitle />
       <div className={"main_container"}>
-        <Date date={"2022/12/01"} />
+        <Date date={"2022/12/16"} />
         <TableHeader />
-        {props.stories.map((story, i) => (
+        {props.japaneseStories.map((japaneseStory, i) => (
           <DayTitleAndPoints
-            key={`story-list-${i}`}
-            dayTitle={story.title}
-            dayPoints={story.score}
-            id={story.id}
+            key={`japaneseStory-list-${i}`}
+            dayTitle={japaneseStory.title}
+            dayPoints={japaneseStory.score}
+            id={japaneseStory.id}
           />
         ))}
       </div>
