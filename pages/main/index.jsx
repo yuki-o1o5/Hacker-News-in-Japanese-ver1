@@ -18,10 +18,14 @@ export async function getStaticProps() {
     const eachStoryDetails = await detail.json();
     return eachStoryDetails;
   };
+  const stories = await Promise.all(
+    topstories.map((topstory) => getDetailUrl(topstory))
+  );
 
+  //  3.This is each Japanese story details
   const translateToJapanese = async (text) => {
     const deepl = require("deepl-node");
-    const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
+    const authKey = process.env.DEEPL_AUTH_KEY;
     const translator = new deepl.Translator(authKey);
 
     const translatedResponse = await translator.translateText(
@@ -45,22 +49,18 @@ export async function getStaticProps() {
     };
   };
 
-  const stories = await Promise.all(
-    topstories.map((topstory) => getDetailUrl(topstory))
-  );
-
-  const traslatedStories = await Promise.all(
+  const japaneseStories = await Promise.all(
     stories.map((story) => translateToJapanese(story))
   );
 
   return {
-    props: { traslatedStories },
+    props: { japaneseStories },
     revalidate: 10,
   };
 }
 
 const Mainpage = (props) => {
-  console.log(props.traslatedStories);
+  console.log(props.japaneseStories);
   return (
     <div>
       <PageTitle />
@@ -68,14 +68,14 @@ const Mainpage = (props) => {
         <ArticleCategoryTitle categoryTitle={"Recent in One Hour"} />
         <div className={"flex_container"}>
           <div className="tertiary_container">
-            {props.traslatedStories.map((story, i) => (
+            {props.japaneseStories.map((japaneseStory, i) => (
               <Article
-                key={`story-list-${i}`}
-                articleTitle={story.title}
-                author={story.by}
-                time={story.time}
-                points={story.score}
-                id={story.id}
+                key={`japaneseStory-list-${i}`}
+                articleTitle={japaneseStory.title}
+                author={japaneseStory.by}
+                time={japaneseStory.time}
+                points={japaneseStory.score}
+                id={japaneseStory.id}
                 index={i + 1}
               />
             ))}

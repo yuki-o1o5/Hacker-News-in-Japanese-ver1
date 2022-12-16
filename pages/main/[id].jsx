@@ -13,7 +13,7 @@ export async function getStaticProps(context) {
   // 2.This is a story detail. ->{...}
   const getDetailUrl = async (id) => {
     const detail = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
     );
     const eachStoryDetails = await detail.json();
     return eachStoryDetails;
@@ -23,9 +23,7 @@ export async function getStaticProps(context) {
   // 3.This is the top comment.
   const getCommentUrl = async (commentId) => {
     const res = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" +
-        commentId +
-        ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${commentId}.json?print=pretty`
     );
     const comments = await res.json();
     return comments;
@@ -33,7 +31,7 @@ export async function getStaticProps(context) {
 
   // 3.This is the comments of the top comment .
   const topComment = story.kids ? await getCommentUrl(story.kids[0]) : "";
-  console.log("topComment", topComment);
+  // console.log("topComment", topComment);
 
   const topCommentReplies = await Promise.all(
     (topComment.kids || []).map((topCommentKid) => getCommentUrl(topCommentKid))
@@ -42,7 +40,7 @@ export async function getStaticProps(context) {
   // 4. This is Japanese title
   const translateToJapaneseTitle = async (text) => {
     const deepl = require("deepl-node");
-    const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
+    const authKey = process.env.DEEPL_AUTH_KEY;
     const translator = new deepl.Translator(authKey);
     const translatedResponse = await translator.translateText(
       text.title,
@@ -67,7 +65,7 @@ export async function getStaticProps(context) {
 
   const translateToJapaneseTopComment = async (text) => {
     const deepl = require("deepl-node");
-    const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
+    const authKey = process.env.DEEPL_AUTH_KEY;
     const translator = new deepl.Translator(authKey);
     const translatedResponse = await translator.translateText(
       text.text,
@@ -99,7 +97,6 @@ export async function getStaticProps(context) {
     : "";
 
   return {
-    // props: { story, topComment, topCommentReplies },
     props: { japaneseStory, japaneseTopComment, japaneseTopCommentReplies },
     revalidate: 10,
   };
@@ -115,7 +112,7 @@ export async function getStaticPaths() {
   const paths = topstories.map((topstory) => ({
     params: { id: topstory.toString() },
   }));
-  console.log(paths);
+  // console.log(paths);
   return {
     paths,
     fallback: false,
@@ -127,10 +124,6 @@ const DetailPage = ({
   japaneseTopComment,
   japaneseTopCommentReplies,
 }) => {
-  console.log(japaneseStory);
-  console.log(japaneseTopComment);
-  console.log(japaneseTopCommentReplies);
-
   return (
     <div>
       <PageTitle />
