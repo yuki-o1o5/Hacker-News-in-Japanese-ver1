@@ -4,6 +4,7 @@ import DetailArticleCommentParent from "../../components/DetailArticleCommentPar
 import DetailArticleText from "../../components/DetailArticleText/DetailArticleText.jsx";
 import DetailArticleTitle from "../../components/DetailArticleTitle/DetailArticleTitle.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
+import puppeteer from "puppeteer";
 
 export async function getStaticProps(context) {
   // 1.This is an id. ->[33935566]
@@ -37,7 +38,7 @@ export async function getStaticProps(context) {
     (topComment.kids || []).map((topCommentKid) => getCommentUrl(topCommentKid))
   );
 
-  // 4. This is Japanese title
+  // 4-1. This is Japanese title
   const translateToJapaneseTitle = async (text) => {
     const deepl = require("deepl-node");
     const authKey = process.env.DEEPL_AUTH_KEY;
@@ -63,6 +64,7 @@ export async function getStaticProps(context) {
 
   const japaneseStory = await translateToJapaneseTitle(story);
 
+  // 4. This is Japanese top comment and comments of the top comment.
   const translateToJapaneseTopComment = async (text) => {
     const deepl = require("deepl-node");
     const authKey = process.env.DEEPL_AUTH_KEY;
@@ -95,6 +97,17 @@ export async function getStaticProps(context) {
         )
       )
     : "";
+
+  // 5. This function is to get webscraping
+  async function scrapeWebsite(url) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url);
+    await page.screenshot({ path: "example.png" });
+    await browser.close();
+  }
+
+  scrapeWebsite();
 
   return {
     props: { japaneseStory, japaneseTopComment, japaneseTopCommentReplies },
