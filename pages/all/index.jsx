@@ -1,12 +1,11 @@
-import Article from "../../components/Article/Article.jsx";
-import ArticleCategoryTitle from "../../components/ArticlesCategoryTitle/ArticlesCategoryTitle.jsx";
-import PageDescription from "../../components/PageDescription/PageDescription.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
+import TableHeader from "../../components/TableHeader/TableHeader.jsx";
+import DayTitleAndPoints from "../../components/DayTitleAndPoints/DayTitleAndPoints.jsx";
 
 export async function getStaticProps() {
   // 1.This is top 3 story ids.
   const resOne = await fetch(
-    `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty&limitToFirst=3&orderBy="$key"`
+    `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty&limitToFirst=10&orderBy="$key"`
   );
   const topstories = await resOne.json();
 
@@ -18,6 +17,7 @@ export async function getStaticProps() {
     const eachStoryDetails = await detail.json();
     return eachStoryDetails;
   };
+
   const stories = await Promise.all(
     topstories.map((topstory) => getDetailUrl(topstory))
   );
@@ -59,32 +59,25 @@ export async function getStaticProps() {
   };
 }
 
-const Mainpage = (props) => {
+const Allpage = (props) => {
   console.log(props.japaneseStories);
   return (
     <div>
       <PageTitle />
       <div className={"main_container"}>
-        <ArticleCategoryTitle categoryTitle={"Recent in One Hour"} />
-        <div className={"flex_container"}>
-          <div className="tertiary_container">
-            {props.japaneseStories.map((japaneseStory, i) => (
-              <Article
-                key={`japaneseStory-list-${i}`}
-                articleTitle={japaneseStory.title}
-                author={japaneseStory.by}
-                time={japaneseStory.time}
-                points={japaneseStory.score}
-                id={japaneseStory.id}
-                index={i + 1}
-              />
-            ))}
-          </div>
-        </div>
-        <PageDescription />
+        <Date date={"2022/12/16"} />
+        <TableHeader />
+        {props.japaneseStories.map((japaneseStory, i) => (
+          <DayTitleAndPoints
+            key={`japaneseStory-list-${i}`}
+            dayTitle={japaneseStory.title}
+            dayPoints={japaneseStory.score}
+            id={japaneseStory.id}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
-export default Mainpage;
+export default Allpage;

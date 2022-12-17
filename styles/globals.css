@@ -42,9 +42,6 @@ h2 {
   display: flex;
   flex-direction: column;
 }
-.each_number_container {
-  margin-bottom: 4rem;
-}
 
 /* detail page */
 .detail_article_title_container {

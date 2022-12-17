@@ -72,7 +72,7 @@ export async function getStaticProps(context) {
       null,
       "ja"
     );
-    console.log(translatedResponse.text);
+    // console.log(translatedResponse.text);
     return {
       by: text.by,
       id: text.id,
@@ -105,7 +105,7 @@ export async function getStaticProps(context) {
 export async function getStaticPaths() {
   // 1.This is top 3 story ids.
   const resOne = await fetch(
-    `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty&limitToFirst=3&orderBy="$key"`
+    `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty&limitToFirst=10&orderBy="$key"`
   );
   const topstories = await resOne.json();
 
@@ -156,7 +156,7 @@ const DetailPage = ({
               {japaneseTopCommentReplies.map((japaneseTopCommentReply, i) => (
                 <DetailArticleCommentChild
                   detailarticlecommentchild={japaneseTopCommentReply.text}
-                  key={`story-list-${i}`}
+                  key={`japaneseTopCommentReply-list-${i}`}
                 />
               ))}
             </div>
