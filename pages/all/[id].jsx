@@ -33,9 +33,12 @@ export async function getStaticProps(context) {
   const topComment = story.kids ? await getCommentUrl(story.kids[0]) : "";
   // console.log("topComment", topComment);
 
-  const topCommentReplies = await Promise.all(
-    (topComment.kids || []).map((topCommentKid) => getCommentUrl(topCommentKid))
-  );
+  let topCommentReplies = [];
+  if (topComment.kids) {
+    topCommentReplies = await Promise.all(
+      topComment.kids.map((topCommentKid) => getCommentUrl(topCommentKid))
+    );
+  }
 
   return {
     props: { story, topComment, topCommentReplies },

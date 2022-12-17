@@ -29,13 +29,19 @@ export async function getStaticProps(context) {
     return comments;
   };
 
-  // 3.This is the comments of the top comment .
+  // const topComment = story.kids ? await getCommentUrl(story.kids[0]) : "";
   const topComment = story.kids ? await getCommentUrl(story.kids[0]) : "";
+
   // console.log("topComment", topComment);
 
-  const topCommentReplies = await Promise.all(
-    (topComment.kids || []).map((topCommentKid) => getCommentUrl(topCommentKid))
-  );
+  // 3.This is the comments of the top comment .
+  let topCommentReplies = [];
+  if (topComment.kids) {
+    topCommentReplies = await Promise.all(
+      topComment.kids.map((topCommentKid) => getCommentUrl(topCommentKid))
+    );
+  }
+  console.log("topCommentReplies", topCommentReplies);
 
   return {
     props: { story, topComment, topCommentReplies },
