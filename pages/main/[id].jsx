@@ -99,15 +99,42 @@ export async function getStaticProps(context) {
     : "";
 
   // 5. This function is to get webscraping
-  async function scrapeWebsite(url) {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url);
-    await page.screenshot({ path: "example.png" });
-    await browser.close();
-  }
 
-  scrapeWebsite();
+  // *puppeteer
+  // async function scrapeWebsite(url) {
+  //   const browser = await puppeteer.launch();
+  //   const page = await browser.newPage();
+  //   await page.goto(url);
+  //   await page.screenshot({ path: "example.png" });
+  //   await browser.close();
+  // }
+
+  // scrapeWebsite();
+
+  // *nightmare
+  const Nightmare = require("nightmare");
+
+  const getData = async (url) => {
+    const nightmare = Nightmare();
+    const response = await nightmare.goto(url);
+    const contentType = response.headers["content-type"];
+    if (contentType === "application/pdf") {
+      const pdfData = await nightmare.pdf();
+      const base64PDF = Buffer.from(pdfData).toString("base64");
+      return base64PDF;
+    } else if (contentType === "text/html") {
+      const data = await nightmare.evaluate(() => {
+        // Retrieve the data from the webpage using JavaScript
+        const elements = document.querySelectorAll("#some-element");
+        return Array.from(elements).map((element) => element.innerText);
+      });
+      return data;
+    }
+  };
+
+  // Example usage:
+  const data = await getData(story.url);
+  console.log(`data:${data}`);
 
   return {
     props: { japaneseStory, japaneseTopComment, japaneseTopCommentReplies },
