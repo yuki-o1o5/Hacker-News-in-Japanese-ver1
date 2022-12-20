@@ -1,2 +1,15 @@
 .tableHeader {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.tableTitle {
+  width: 80%;
+  font-weight: bold;
+}
+
+.tableScore {
+  width: 20%;
+  font-weight: bold;
 }

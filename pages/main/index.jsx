@@ -1,5 +1,4 @@
 import Article from "../../components/Article/Article.jsx";
-import ArticleNumber from "../../components/ArticleNumber/ArticleNumber.jsx";
 import ArticleCategoryTitle from "../../components/ArticlesCategoryTitle/ArticlesCategoryTitle.jsx";
 import PageDescription from "../../components/PageDescription/PageDescription.jsx";
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
@@ -14,7 +13,7 @@ export async function getStaticProps() {
   // 2.This is each story details.
   const getDetailUrl = async (id) => {
     const detail = await fetch(
-      "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty"
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
     );
     const eachStoryDetails = await detail.json();
     return eachStoryDetails;
@@ -30,6 +29,25 @@ export async function getStaticProps() {
   };
 }
 
+// const deepl = require("deepl-node");
+
+// const authKey = "58f5a663-e31d-2c7e-c726-c4ae06402ab6:fx";
+// const translator = new deepl.Translator(authKey);
+
+// translator
+//   .getUsage()
+//   .then((usage) => {
+//     console.log(usage);
+//     return translator.translateText("Hello, world!", null, "fr");
+//   })
+//   .then((result) => {
+//     console.log(result.text); // Bonjour, le monde !
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//     process.exit?.(1);
+//   });
+
 const Mainpage = (props) => {
   console.log(props.stories);
   return (
@@ -38,17 +56,6 @@ const Mainpage = (props) => {
       <div className={"main_container"}>
         <ArticleCategoryTitle categoryTitle={"Recent in One Hour"} />
         <div className={"flex_container"}>
-          <div className={"secondry_container"}>
-            <div className={"each_number_container"}>
-              <ArticleNumber articleNumber="1" />
-            </div>
-            <div className={"each_number_container"}>
-              <ArticleNumber articleNumber="2" />
-            </div>
-            <div className={"each_number_container"}>
-              <ArticleNumber articleNumber="3" />
-            </div>
-          </div>
           <div className="tertiary_container">
             {props.stories.map((story, i) => (
               <Article
@@ -57,6 +64,8 @@ const Mainpage = (props) => {
                 author={story.by}
                 time={story.time}
                 points={story.score}
+                id={story.id}
+                index={i + 1}
               />
             ))}
           </div>
