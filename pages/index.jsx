@@ -2,7 +2,7 @@ import Article from "../components/Article/Article.jsx";
 import ArticleCategoryTitle from "../components/ArticlesCategoryTitle/ArticlesCategoryTitle.jsx";
 import PageDescription from "../components/PageDescription/PageDescription.jsx";
 import PageTitle from "../components/PageTitle/PageTitle.jsx";
-import * as deepl from "deepl-node";
+
 
 const Home = () => {
   
